@@ -9,6 +9,7 @@ public class SparseArray {
         int chessArray1[][] = new int[11][11];
         chessArray1[1][2] = 1;
         chessArray1[2][3] = 2;
+        chessArray1[4][6] = 8;
         // output original
         System.out.println("Original array: ");
         for(int[] row:chessArray1){
@@ -48,5 +49,8 @@ public class SparseArray {
             for(int data:row) System.out.printf("%d\t",data);
             System.out.println();
         }
+
+        // transform sparse to array (omit)
+        //...
     }
 }
