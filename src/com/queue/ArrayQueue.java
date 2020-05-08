@@ -1,14 +1,19 @@
 package com.queue;
 
+import com.sun.javaws.IconUtil;
+
 import java.util.Arrays;
 
 public class ArrayQueue {
     public static void main(String[] args) {
-        ArrayQueueRealize aq = new ArrayQueueRealize(10);
-        aq.add(1);
-        aq.add(2);
-        aq.add(4);
-        aq.show();
+        CircleArrayRealize ca = new CircleArrayRealize(3);
+        ca.add(10);
+        ca.add(2);
+        ca.add(1);
+        System.out.println("first item: ");
+        System.out.println(ca.get());
+        System.out.println("all items in queue: ");
+        ca.show();
     }
 }
 //使用数组模拟队列
@@ -70,6 +75,70 @@ class ArrayQueueRealize{
     public int peek(){
         if(this.isEmpty()) throw new RuntimeException("Empty queue");
         return arr[front+1];
+    }
+}
+
+class CircleArrayRealize{
+    private int maxSize;
+    private int front; // point to the first item
+    private int rear; // point to the place after the last item
+    private int[] arr;
+    private int size;
+
+    public CircleArrayRealize(int maxSize) {
+        this.maxSize = maxSize;
+        this.arr = new int[maxSize];
+        this.front = 0;
+        this.rear = 0;
+        this.size = 0;
+    }
+
+    public boolean isFull(){
+        // 当队列为满时，条件为：(rear+1)%maxSize == front
+        //return (rear+1) % maxSize == front;
+        return size == maxSize;
+    }
+    public boolean isEmpty(){
+        // 当队列为空时，条件为：rear == front
+        return size==0;
+    }
+
+    // add item to queue
+    public void add(int item){
+        if(isFull()) {
+            System.out.println("This queue is full, cannot add item");
+            return;
+        }
+        arr[rear] = item;
+        size++;
+        rear = (rear+1)%maxSize;
+    }
+
+    // get item from queue
+    public int get(){
+        if(isEmpty()) {
+            throw new RuntimeException("This queue is empty");
+        }
+        else {
+            size--;
+            int res = arr[front];
+            front = (front+1)%maxSize;
+            return res;
+        }
+    }
+
+    public void show(){
+        if(isEmpty()) System.out.println("This queue is empty");
+        else{
+            for(int i=0; i<size; i++){
+                int index = (front+i) % maxSize;
+                System.out.println(arr[index]+"\t");
+            }
+        }
+    }
+
+    public int getSize(){
+        return size;
     }
 }
 
